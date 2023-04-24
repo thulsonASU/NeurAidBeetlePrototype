@@ -95,7 +95,62 @@ Before jumping into board construction, every component was tested individually 
 <br /> <img src="./images/mvp_board_zoomed_out.png"  width="80%" height="80%"> <br />
 
 # Code Breakdown
+For the code breakdown I will be focusing on the final build for the MVP. The sketch name for the final build is 'sketch_apr21a.ino'.
+<br /> **Variables** <br />
+```
+//DEFINE DIGITIAL PINS
+int pushBtn1 = 10; // defines the pin number for the first push button
+int pushBtn2 = 11; // defines the pin number for the second push button
+int motorPin = 9; // defines the digital out pin for the DC motor
+
+// Define the pin connections for ANALOG in
+const int micPin1 = A0; // connect the amplifier output to analog pin 0
+const int micPin2 = A1; // connect the amplifier output to analog pin 2
+
+// DEFINE MICROPHONE VARS
+const int sampleWindow = 50; // Sample window width in mS (50 mS = 20Hz)
+unsigned int sample; // the sample variable is initalized as an unsigned integer and will be used for collecting sample data from the microphone
+unsigned int sample2; // sample2 will be used in the same way but for the second microphone connected
+double previousUserNoiseFiltered = 0; // No noise to start
+double previousMax4466Voltage = 0; // no voltage to start
+double previousAmbientNoiseFiltered = 0; // no nouse to start
+double previousMax9814Voltage = 0; // no voltage to start
+
+/*
+This project consisted of several counter variables as listed below.
+These counter variables were utilized to guage the level of noise from each microphone as a voltage.
+The team and I did not convert the microphone voltage to a straight decibel reading.
+By using ranges and these counters we were able to isolate some noise.
+*/
+
+int userVoiceCount = 0; // no data
+int highCount = 0;
+int normalCount = 0;
+int lowCount = 0;
+int ambHighCount = 0;
+int ambNormalCount = 0;
+int ambLowCount = 0;
+int i = 0; // iteration variable for motor while loop
+
+// BUTTON VARS
+/*
+All button variables are initalized at high to start. This is part of the debounce logic.
+*/
+int btn1State = HIGH;         // current state of the button
+int lastBtn1State = HIGH;     // previous state of the button
+int btn2State = HIGH;         // current state of the button
+int lastBtn2State = HIGH;     // previous state of the button
+unsigned long lastDebounceTime = 0;  // last time the button was debounced
+unsigned long debounceDelay = 10;    // debounce time in milliseconds
+
+// MOTOR VARS
+float intensityMultiplier = 1; // the intensity multiplier is used to provide the user the capability to increase and decrease motor intensity to a desired value.
+int motordebugFlag = 0; // this is a debug flag utilized for testing motor intensity changes.
+int motorFlag = 1; // this enables motor output for the system.
+```
 
 
 # How to Use
+
+# Project Photos
 
