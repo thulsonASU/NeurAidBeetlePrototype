@@ -7,8 +7,6 @@ The goal of this project repository is to showcase the Beetle Arduino microcontr
 <img src="./images/Barrow-Logo.png"  width="35%" height="35%"> <br />
 
 ## Project Requirements
-The project consisted of the following requirements.
-
 <br /> **Functional Requirements** <br />
 - As for technical functionality, the device must capture the user's voice intensity and
 compute the error of that intensity to the ambient environment to gauge an appropriate
