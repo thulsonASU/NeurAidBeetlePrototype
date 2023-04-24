@@ -1,5 +1,5 @@
 # Project Overview
-The goal of this project repository is to showcase the Beetle Arduino microcontroller logic that was used to demonstrate a Minimal Viable Product for ASU team NeurAid in partnership with the Barrow Neurological Institute. <br />
+The goal of this project repository is to showcase the Beetle Arduino microcontroller logic that was used to demonstrate a Minimal Viable Product for ASU team NeurAid in partnership with the Barrow Neurological Institute. MVP Board developed by Tyler Hulson, MVP Program developed by Tyler Hulson and Nithish Kumar. <br />
 <img src="./images/asu_fultonengineering_horiz_rgb_maroongold_600ppi.png"  width="40%" height="40%">
 <img src="./images/Barrow-Logo.png"  width="35%" height="35%"> <br />
 
@@ -96,6 +96,10 @@ Before jumping into board construction, every component was tested individually 
 
 # Code Breakdown
 For the code breakdown I will be focusing on the final build for the MVP. The sketch name for the final build is 'sketch_apr21a.ino'.
+
+## Detailed Sequence Diagram by Nithish Kumar
+Below is the sequence diagram that describes the overall system logic for both team boards.
+<br /> <img src="./images/mvp_board_zoomed_out.png"  width="80%" height="80%"> <br />
 
 ## Initalizing Variables
 
@@ -329,9 +333,165 @@ void setup() {
   lastBtn2State = btn2Reading;          // update the previous state
 ```
 
-## 
+## Program Void Loop | Microphone Sampling
+
+```c
+  /*
+  COLLECT MICROPHONE DATA OVER 50Hz SAMPLE WINDOW
+  sample
+  sample2
+  Variables above are capturing the raw input from the microphones and directly converting them to voltage.
+  */
+
+  // MICROPHONE 1 -----------------------------------------------------------------------------------------------------------
+  // Read the analog value from the MAX4466 amplifier output
+  unsigned long startMillis = millis();  // Start of sample window
+  unsigned int peakToPeak = 0;   // peak-to-peak level
+
+  unsigned int signalMax = 0;
+  unsigned int signalMin = 1024;
+
+  // collect data for 50 mS
+  while (millis() - startMillis < sampleWindow)
+  {
+    sample = analogRead(micPin1);
+    if (sample < 1024)  // toss out spurious readings
+    {
+      if (sample > signalMax)
+      {
+        signalMax = sample;  // save just the max levels
+      }
+      else if (sample < signalMin)
+      {
+        signalMin = sample;  // save just the min levels
+      }
+    }
+  }
+  peakToPeak = signalMax - signalMin;  // max - min = peak-peak amplitude
+  double max4466Voltage = (peakToPeak * 5.0) / 1024;  // convert to volts
+
+  // MICROPHONE 2
+  // Read the analog value from the MAX4466 amplifier output
+  unsigned long startMillis2 = millis();  // Start of sample window
+  unsigned int peakToPeak2 = 0;   // peak-to-peak level
+
+  unsigned int signalMax2 = 0;
+  unsigned int signalMin2 = 1024;
+
+  // collect data for 50 mS
+  while (millis() - startMillis2 < sampleWindow)
+  {
+    sample2 = analogRead(micPin2);
+    if (sample2 < 1024)  // toss out spurious readings
+    {
+      if (sample2 > signalMax2)
+      {
+        signalMax2 = sample2;  // save just the max levels
+      }
+      else if (sample2 < signalMin2)
+      {
+        signalMin2 = sample2;  // save just the min levels
+      }
+    }
+  }
+  peakToPeak2 = signalMax2 - signalMin2;  // max - min = peak-peak amplitude
+  double max9814Voltage = (peakToPeak2 * 5.0) / 1024;  // convert to volts
+```
+
+## Program Void Loop | Filtering
+
+```c
+ /*
+  FILTERING SECTION
+  Low pass filter as derived my Nithish Kumar for use with the MAX4466 (User Mic) and MAX9814 (Ambient Mic)
+  
+  Filter for microphone 1 (user mic). Low pass first order filter 200Hz. sampling frequency 7000Hz 
+  Filter for microphone 2 (ambient mic). Low pass first order filter 500Hz sampling frequency 30000Hz
+
+  Gains were generated using python math library.
+  */
+
+  float userNoiseFiltered = 0.83526683*previousUserNoiseFiltered + 0.08236658*max4466Voltage + 0.08236658*previousMax4466Voltage;
+  previousUserNoiseFiltered = userNoiseFiltered;
+  previousMax4466Voltage = max4466Voltage;
+
+  float ambientNoiseFiltered = 0.90049055*previousAmbientNoiseFiltered + 0.04975473*max9814Voltage + 0.04975473*previousMax9814Voltage;
+  previousAmbientNoiseFiltered = ambientNoiseFiltered;
+  previousMax9814Voltage = max9814Voltage;
+```
+
+## Program Void Loop | Data Processing
+
+```c
+  /*
+  DATA PROCESSING SECTION
+  Process the data from the filtered microphone outputs and determine feedback using noise gates and counters.
+  */
+  
+  //float errorThreshold = 1; // Threshold for error
+  float userNoiseGate = 0.45; // user noise gate is a filtering method to reduce detecting background noise and only register spikes presumably from the user
+
+  if(userNoiseGate <= userNoiseFiltered) // if the user noise gate is less than the filter then enter if
+  {
+    // PROCESS USER MIC
+    userVoiceCount = userVoiceCount + 1; // iterate/increase user voice count by 1
+    if(userVoiceCount >= 2) // filter out microphone spikes and check for a contoninous noise by adding a counter for the user noise
+    {
+      if(userNoiseFiltered > 1) // if the user is over 1 then the user is high
+      {
+        highCount = highCount + 1; // user is speaking at a high volume
+      }
+      else if (userNoiseFiltered >= 0.7 && userNoiseFiltered <= 1) // if the filtered noise is withing these bounds then the user is normal
+      {
+        normalCount = normalCount + 1; // iterate/increase the normal count by 1
+      }
+      else if (userNoiseFiltered >= 0.05 && userNoiseFiltered < 0.6) // if the filtered noise is within these bounds then the user is low
+      {
+        lowCount = lowCount + 1; // iterate/increase the normal count by 1
+      }
+    }
+  }
+  else if (userNoiseGate > userNoiseFiltered) // if the user noise gate is greater than the filtered user noise then process ambient data
+  {
+    // PROCESS AMBIENT MIC
+    if(ambientNoiseFiltered > 1.3) // if ambient noise filter is greater than 1.3 then assume loud environment
+      {
+        ambHighCount = ambHighCount + 1; // iterate/increase high count by 1
+      }
+      else if (ambientNoiseFiltered >= 1.21 && ambientNoiseFiltered <= 1.3) // if ambient noise data is between 1.21 and 1.3 then assume normal environment
+      {
+        ambNormalCount = ambNormalCount + 1; // iterate/increase normal count by 1
+      }
+      else if (ambientNoiseFiltered >= 0.09 && ambientNoiseFiltered < 1.2) // if ambient noise is within 0.09 and 1.2 then assume low environment
+      {
+        ambLowCount = ambLowCount + 1; // iterate/increase low count by 1
+      }
+    }
+```
+
+## Program Void Loop | Motor Function and Count Resets
+
+```c
+// MINI DC HAPTIC MOTOR -----------------------------------------------------------------------------------------------------------
+  motorFeedback(lowCount,normalCount,highCount,ambHighCount,ambNormalCount,ambLowCount); // Pass counts to motor function
+  if (ambLowCount + ambNormalCount + ambHighCount >= 20) // if the ambient counts are greater than 20 then reset the count
+  {
+    ambLowCount = 0;
+    ambNormalCount = 0;
+    ambHighCount = 0;
+  }
+  if (lowCount + normalCount + highCount >= ambLowCount + ambNormalCount + ambHighCount) // if the user counts are greater or equal to the ambient counts reset the count
+  {
+    lowCount = 0;
+    normalCount = 0;
+    highCount = 0;
+  }  
+```
 
 # How to Use
+The board in it's current state is not designed to suite a wearable device, however can be utilized for demonstration. To use the board load the build program found in (build -> sketch_apr21a-001.zip -> sketch_apr21a -> sketch_apr21a.ino). <br />
 
-# Project Photos
+The device will initalize and start collecting ambient mic data. When speaking into the user microphone it will collect a sample of counts up to the amount of ambient counts collected for
+
+# All Project Photos
 
