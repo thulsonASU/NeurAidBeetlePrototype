@@ -50,7 +50,7 @@ symptom that affects their fine motor control. As a result, the device must be d
 to be accessible and easy to use to accommodate these symptoms.
 
 ## Prototype Board
-The scope of the prototype board was simply to demonstrate all functionality for the the project in a compact protoboard configuration. this would assist in getting a better grasp on the final boards size and placement for the housing. By developing this board the team also achieved a better understanding on how these two microphones function and can leverage that knowledge for the final prototype. <br />
+The scope of the prototype board was simply to demonstrate all functionality for the project in a compact protoboard configuration. This would assist in getting a better grasp on the final board size and placement for the housing. By developing this board, the team also gained a better understanding of how these two microphones function and can leverage that knowledge for the final prototype. <br />
 <br />
 Before jumping into board construction, every component was tested individually as a subsystem. Once that was completed, a rough schematic was drawn up and verified before proceeding with board fabrication. <br />
 <img src="./images/breadboard.png"  width="80%" height="80%"> <br />
@@ -476,12 +476,14 @@ void setup() {
   motorFeedback(lowCount,normalCount,highCount,ambHighCount,ambNormalCount,ambLowCount); // Pass counts to motor function
   if (ambLowCount + ambNormalCount + ambHighCount >= 20) // if the ambient counts are greater than 20 then reset the count
   {
+    // Reset counts
     ambLowCount = 0;
     ambNormalCount = 0;
     ambHighCount = 0;
   }
   if (lowCount + normalCount + highCount >= ambLowCount + ambNormalCount + ambHighCount) // if the user counts are greater or equal to the ambient counts reset the count
   {
+    // Reset counts
     lowCount = 0;
     normalCount = 0;
     highCount = 0;
@@ -491,7 +493,13 @@ void setup() {
 # How to Use
 The board in it's current state is not designed to suite a wearable device, however can be utilized for demonstration. To use the board load the build program found in (build -> sketch_apr21a-001.zip -> sketch_apr21a -> sketch_apr21a.ino). <br />
 
-The device will initalize and start collecting ambient mic data. When speaking into the user microphone it will collect a sample of counts up to the amount of ambient counts collected for
+<br /> The device will initialize and start collecting ambient microphone data. When speaking into the user microphone, it will collect a sample of counts up to the amount of ambient counts collected. The system will be delayed before providing the user with feedback. The Beetle Prototype is not perfect 100% of the time, but it does provide a confidence rating of 80% correct. <br />
+
+<br /> Some assembly is required for the prototype board. The main components to connect are going to be the MAX4466 module, the MAX9814 module, the jumpers for the mini DC haptic motor, and connecting the 9 volt batteries. <br />
+
+<br /> Note: This board is not protected under any warranty and must be constructed carefuly to avoid rapid disassembly. <br />
+
+<br /> First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466 module. The module will be facing away from the board and towards the regulator. Secondly, connect the vcc, gnd, and out pins in series for the MAX9814 module. Skip the gain pin, as that would limit the microphone's sensitivity. The module will be facing away from the board and away from the regulator, in the opposite direction to the MAX4466 module. Thirdly, connect the yellow wire from the DC haptic motor to the correlating yellow wire for the protoboard; do the same for the green wire. Lastly, connect your 9-volt batteries, and tada, you're good to go.<br />
 
 # All Project Photos
 
