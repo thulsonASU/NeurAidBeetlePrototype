@@ -59,10 +59,38 @@ Before jumping into board construction, every component was tested individually 
 
 ## Component Breakdown
 <br /> **Motor Subsystem** <br />
-- MOSFET
-- Diode
-- 100 Ohm Resistor
-- 
+- 1x ZVP2106A MOSFET
+- 1x 1N4007 Silicon Rectifier Diode
+- 1x 100 Ohm Resistor
+- 1x 104 Ceramic Capacitor
+
+<br /> **Button Subsystem** <br />
+- 2x 10k Ohm Resistors in Pull Down Configuration
+- 2x mini push buttons
+- 2x Jumper wires
+
+<br /> **Power Supply Subsystem** <br />
+- 1x LM7805 Linear Voltage Regulator (5v Output)
+- 2x 9v DC Batteries
+- 1x 106 Ceramic Capacitor
+- 1x 104 Ceramic Capacitor
+- 1x 2-pin Screw Terminal
+- 2x 9v Battery Connectors
+
+<br /> **Power LED Subsystem** <br />
+- 1x 220 Ohm Resistor
+- 1x Red Light Emitting Diode
+
+<br /> **MAX4466 Microphone Subsystem** <br />
+- 1x MAX4466 Microphone Module
+- 1x 104 Ceramic Capacitor
+- 1x 3-pin female header
+- 3x Male female jumper wires
+
+<br /> **MAX9814 Microphone Subsystem** <br />
+- 1x MAX9814 Microphone Module
+- 1x 5-pin female header
+- 3x Male female jumper wires
 
 # Code Breakdown
 
