@@ -276,8 +276,60 @@ void setup() {
 }
 ```
 
+## Program Void Loop | Buttons
 
+```c
+  /*
+  BUTTON DEBOUNCE SECTION
+  Button 1 and Button 2 use two seperate debounce checks as implementing it in a function proved more trouble than it is worth.
+  I hit a roadblock when working out a function for the push buttons so to keep it simple I have them as two seperate blocks in the main loop
+  */
+  
+  // BUTTON 1
+  int btn1Reading = digitalRead(pushBtn1); // read the state of the button
+  if (btn1Reading != lastBtn1State) {    // if the button state has changed
+    lastDebounceTime = millis();       // record the time of the state change
+  }
+  if ((millis() - lastDebounceTime) > debounceDelay) { // if the debounce delay has passed
+    if (btn1Reading != btn1State) {     // if the button state is different from the current state
+      btn1State = btn1Reading;          // update the current state
+      if (btn1State == LOW) {       // if the button is pressed
+        /*
+        For the below if statement it is important to constrain the button increase so the user does not accidently burn out the motor
+        */
+        if(intensityMultiplier <= 2) // in the button intensityMultiplier is less than 2 then increase the intensity
+        {
+          intensityMultiplier = intensityMultiplier + 0.1; // iterate/increase intensity by 0.1
+        }
+      }
+    }
+  }
+  lastBtn1State = btn1Reading;          // update the previous state
 
+  // BUTTON 2
+  int btn2Reading = digitalRead(pushBtn2); // read the state of the button
+  if (btn2Reading != lastBtn2State) 
+  {    // if the button state has changed
+    lastDebounceTime = millis();       // record the time of the state change
+  }
+  if ((millis() - lastDebounceTime) > debounceDelay) { // if the debounce delay has passed
+    if (btn2Reading != btn2State) {     // if the button state is different from the current state
+      btn2State = btn2Reading;          // update the current state
+      if (btn2State == LOW) {       // if the button is pressed
+        /*
+        For the below if statement it is important to constrain the button decrease so the user can still get some haptic feedback
+        */
+        if(intensityMultiplier >= 0.5) // if the intensity multiplier is greater or equal to 0.5 then
+        {
+          intensityMultiplier = intensityMultiplier - 0.1; // iterate/decrease the intesnity by 0.1
+        }
+      }
+    }
+  }
+  lastBtn2State = btn2Reading;          // update the previous state
+```
+
+## 
 
 # How to Use
 
