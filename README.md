@@ -97,7 +97,8 @@ Before jumping into board construction, every component was tested individually 
 # Code Breakdown
 For the code breakdown I will be focusing on the final build for the MVP. The sketch name for the final build is 'sketch_apr21a.ino'.
 <br /> **Variables** <br />
-```
+
+```c
 //DEFINE DIGITIAL PINS
 int pushBtn1 = 10; // defines the pin number for the first push button
 int pushBtn2 = 11; // defines the pin number for the second push button
