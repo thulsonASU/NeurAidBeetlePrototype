@@ -92,6 +92,8 @@ Before jumping into board construction, every component was tested individually 
 - 1x 5-pin female header
 - 3x Male female jumper wires
 
+<br /> <img src="./images/mvp_board_zoomed_out.png"  width="80%" height="80%"> <br />
+
 # Code Breakdown
 
 
