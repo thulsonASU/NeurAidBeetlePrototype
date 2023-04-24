@@ -97,7 +97,7 @@ Before jumping into board construction, every component was tested individually 
 # Code Breakdown
 For the code breakdown I will be focusing on the final build for the MVP. The sketch name for the final build is 'sketch_apr21a.ino'.
 
-<br /> **Initalizing Variables** <br />
+## Initalizing Variables
 
 ```c
 //DEFINE DIGITIAL PINS
@@ -150,6 +150,133 @@ float intensityMultiplier = 1; // the intensity multiplier is used to provide th
 int motordebugFlag = 0; // this is a debug flag utilized for testing motor intensity changes.
 int motorFlag = 1; // this enables motor output for the system.
 ```
+
+## Initalizing Functions
+
+```c
+/*
+  motorFeedback fnc
+  
+  Function takes the ambient low, ambient normal, ambient high, low, normal, and high counts from the data processing section and determines which the error. 
+  this function uses a simple P controller with a gain of 3 to determine if the user is in a low or high range of tolerance.
+  Once the user has been determined to be high or low it will provide haptic feedback to the user from the DC motor in either a long pulse or short pulse respectively.
+  No feedback if user is in normal range.
+*/
+
+// START OF FUNCTION
+void motorFeedback(int lowCount,int normalCount,int highCount,int ambHighCount,int ambLowCount,int ambNormalCount) 
+{
+  // Check if counts for user and ambient are the same. This is important for computing the error.
+  if(lowCount + normalCount + highCount == ambLowCount + ambNormalCount + ambHighCount)
+  {
+    // Take the difference and find the error between the two counts
+    float highError = abs(ambHighCount - highCount);
+    float lowError = abs(ambLowCount - lowCount);
+    // compute the total error to compare against
+    float totalError = abs(lowCount + normalCount + highCount - ambLowCount + ambNormalCount + ambHighCount);
+
+    if (3*lowError > totalError) // 3 times the error for the low count must be greater than the total error for the user to speak softly
+    {
+      // lowCount is the highest
+      if(motorFlag == 1) // this is the motorFlag variable from earlier checking it it is true / 1
+      {    
+        // provide short feedback
+        
+        /*
+        While iteration variable i is less than 5,
+        Define motor intensity as 110 times the intensity multiplier variable,
+
+        By defining the motor as 110 times the intensity multiplier we guarantee a less intense haptic feedback for the user.
+        
+        activate the motor using a Pulse Wave Modulator with the corrected motor intensity,
+        delay the system by 100ms to provide feedback,
+        deactive the motor by setting the Pulse Wave Modulator to zero
+        delay the system 100ms to provide feedback,
+        iterate the i variable by 1 and repeat the loop until it is greater than 5.
+        */
+
+        while (i < 5)
+        {
+          // Would be ideal to change the motor pulse based on frequency, but Arduino is wack so I'm using a for loop and delay
+          float motorIntensity = 110*intensityMultiplier;
+          analogWrite(motorPin,motorIntensity);
+          delay(100);
+          analogWrite(motorPin,0);
+          delay(100);
+          i = i + 1;
+        }
+      }
+      // Reset counts
+      i = 0;
+      lowCount = 0;
+      normalCount = 0;
+      highCount = 0;
+    } 
+    else if (3*highError > totalError) 
+    {
+      // highCount is the highest
+      if(motorFlag == 1) // this is the motorFlag variable from earlier checking it it is true / 1
+      {    
+        // Provide long feedback
+        
+        /*
+        While iteration variable i is less than 2,
+        Define motor intensity as 90 times the intensity multiplier variable,
+
+        By defining the motor as 90 times the intensity multiplier we guarantee a less intense haptic feedback for the user.
+
+        activate the motor using a Pulse Wave Modulator with the corrected motor intensity,
+        delay the system by 1 second to provide feedback,
+        deactive the motor by setting the Pulse Wave Modulator to zero
+        delay the system 1 second to provide feedback,
+        iterate the i variable by 1 and repeat the loop until it is greater than 2.
+        */
+        
+        while (i < 2)
+        {
+          // Would be ideal to change the motor pulse based on frequency, but Arduino is wack so I'm using a for loop and delay
+          float motorIntensity = 90*intensityMultiplier;
+          analogWrite(motorPin,motorIntensity);
+          delay(1000);
+          analogWrite(motorPin,0);
+          delay(1000);
+          i = i + 1;
+        }
+      }
+      // Reset counts
+      i = 0;
+      lowCount = 0;
+      normalCount = 0;
+      highCount = 0;
+    } 
+    else 
+    {
+      // User is speaking normally
+      // Reset counts
+      lowCount = 0;
+      normalCount = 0;
+      highCount = 0;
+      ambLowCount = 0;
+      ambNormalCount = 0;
+      ambHighCount = 0;
+    }
+  }
+}
+// END OF FUNCTION
+```
+
+## Program Void Setup
+
+```c
+void setup() {
+   // Map hardware pins to microcontroller
+   pinMode(pushBtn1, INPUT_PULLUP); // initialize the push button pin as a pullup
+   pinMode(pushBtn2, INPUT_PULLUP); // initalize the push button pin as a pullup
+   pinMode(motorPin, OUTPUT); // initialize the motor pin as an output
+}
+```
+
+
 
 
 # How to Use
