@@ -514,11 +514,11 @@ First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466
 <img src="./images/ALL/housingStitchedv1.png"  width="80%" height="80%"> <br />
 
 # Project Videos
-![](https://user-images.githubusercontent.com/100303302/234140475-e88183d7-f3f9-40ce-974e-2cd6227b57da.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140514-07102d90-9bd2-4d33-9028-ecf6d0460afe.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140559-82739832-1b88-49e2-bed9-a8eb8f6ce25a.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140585-6f7c7679-ca66-42f6-8d11-8ca0a189e484.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140613-8181c0e7-1a88-435e-8981-1b7fcd3d6b3c.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140963-9d0605dd-e7bf-430b-b102-3526ed5dde90.mp4)
-![](https://user-images.githubusercontent.com/100303302/234140990-9f054fd0-ee9a-4978-bb2a-43923294a65b.mp4)
-![](https://user-images.githubusercontent.com/100303302/234141014-0915ac89-fd3a-412f-a205-1e474b98b2b9.mp4)
+https://user-images.githubusercontent.com/100303302/234140475-e88183d7-f3f9-40ce-974e-2cd6227b57da.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140514-07102d90-9bd2-4d33-9028-ecf6d0460afe.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140559-82739832-1b88-49e2-bed9-a8eb8f6ce25a.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140585-6f7c7679-ca66-42f6-8d11-8ca0a189e484.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140613-8181c0e7-1a88-435e-8981-1b7fcd3d6b3c.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140963-9d0605dd-e7bf-430b-b102-3526ed5dde90.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234140990-9f054fd0-ee9a-4978-bb2a-43923294a65b.mp4 <br />
+https://user-images.githubusercontent.com/100303302/234141014-0915ac89-fd3a-412f-a205-1e474b98b2b9.mp4 <br />
