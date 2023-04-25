@@ -515,8 +515,6 @@ First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466
 
 # Project Videos
 
-<br />
-
 https://user-images.githubusercontent.com/100303302/234140475-e88183d7-f3f9-40ce-974e-2cd6227b57da.mp4 
 
 <br />
