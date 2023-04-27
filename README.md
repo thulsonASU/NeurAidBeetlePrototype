@@ -97,9 +97,10 @@ Before jumping into board construction, every component was tested individually 
 # Code Breakdown
 For the code breakdown I will be focusing on the final build for the MVP. The sketch name for the final build is 'sketch_apr21a.ino'.
 
-## Detailed Sequence Diagram by Nithish Kumar
+## Detailed Sequence Diagram by kirthik Roshan Nagaraj
 Below is the sequence diagram that describes the overall system logic for both team boards.
-<br /> <img src="./images/mvp_board_zoomed_out.png"  width="80%" height="80%"> <br />
+<br /> <img src="./images/overall_sequence_flow_diagram-1.png"  width="80%" height="80%"> <br />
+<br /> <img src="./images/process_func_sequence_flow_diagram-1.png"  width="80%" height="80%"> <br />
 
 ## Initalizing Variables
 
