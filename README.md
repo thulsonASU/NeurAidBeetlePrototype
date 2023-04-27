@@ -502,7 +502,7 @@ Note: This board is not protected under any warranty and must be constructed car
 
 First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466 module. The module will be facing away from the board and towards the regulator. Secondly, connect the vcc, gnd, and out pins in series for the MAX9814 module. Skip the gain pin, as that would limit the microphone's sensitivity. The module will be facing away from the board and away from the regulator, in the opposite direction to the MAX4466 module. Thirdly, connect the yellow wire from the DC haptic motor to the correlating yellow wire for the protoboard; do the same for the green wire. Lastly, connect your 9-volt batteries, and tada, you're good to go.<br />
 
-# All Project Photos
+# Project Photos
 <img src="./images/ALL/conceptSketch.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/proofOfConcept.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/proofofConcept2.png"  width="80%" height="80%"> <br />
@@ -513,6 +513,9 @@ First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466
 <img src="./images/ALL/boxConceptFinal.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/boxv1.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/housingStitchedv1.png"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_224910_1.jpg"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_232557_2.jpg"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_232557_3.jpg"  width="80%" height="80%"> <br />
 
 # Project Videos
 
