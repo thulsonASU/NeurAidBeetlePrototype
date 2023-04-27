@@ -513,9 +513,9 @@ First, start by connecting the Vcc, Gnd, and Out pins in series with the MAX4466
 <img src="./images/ALL/boxConceptFinal.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/boxv1.png"  width="80%" height="80%"> <br />
 <img src="./images/ALL/housingStitchedv1.png"  width="80%" height="80%"> <br />
-<img src="./images/ALL/Notes_230425_224910_1.jpg"  width="80%" height="80%"> <br />
-<img src="./images/ALL/Notes_230425_232557_2.jpg"  width="80%" height="80%"> <br />
-<img src="./images/ALL/Notes_230425_232557_3.jpg"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_224910_1.png"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_232557_2.png"  width="80%" height="80%"> <br />
+<img src="./images/ALL/Notes_230425_232557_3.png"  width="80%" height="80%"> <br />
 
 # Project Videos
 
