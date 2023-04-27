@@ -99,8 +99,8 @@ For the code breakdown I will be focusing on the final build for the MVP. The sk
 
 ## Detailed Sequence Diagram by kirthik Roshan Nagaraj
 Below is the sequence diagram that describes the overall system logic for both team boards.
-<br /> <img src="./images/overall_sequence_flow_diagram-1.png"  width="80%" height="80%"> <br />
-<br /> <img src="./images/process_func_sequence_flow_diagram-1.png"  width="80%" height="80%"> <br />
+<br /> <img src="./images/overall_sequence_flow_diagram-1.png"  width="100%" height="100%"> <br />
+<br /> <img src="./images/process_func_sequence_flow_diagram-1.png"  width="100%" height="100%"> <br />
 
 ## Initalizing Variables
 
